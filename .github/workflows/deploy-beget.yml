@@ -1,0 +1,46 @@
+# Автодеплой ветки main на виртуальный хостинг Beget по FTPS.
+#
+# Secrets (Settings → Secrets and variables → Actions):
+#   BEGET_FTP_HOST     — сервер из панели (часто вида *.beget.tech)
+#   BEGET_FTP_USER     — логин FTP
+#   BEGET_FTP_PASSWORD — пароль FTP
+#
+# Если корень FTP уже открывается в каталог сайта, замените server-dir ниже на ./
+
+name: Deploy to Beget
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: beget-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Prepare site
+        run: |
+          mkdir -p _site
+          cp index.html styles.css ascii-bg.js _site/
+          if [ -f CNAME ]; then cp CNAME _site/; fi
+
+      - name: Upload to Beget (FTPS)
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.6
+        with:
+          server: ${{ secrets.BEGET_FTP_HOST }}
+          username: ${{ secrets.BEGET_FTP_USER }}
+          password: ${{ secrets.BEGET_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: ./_site/
+          server-dir: public_html/
+          dangerous-clean-slate: false
