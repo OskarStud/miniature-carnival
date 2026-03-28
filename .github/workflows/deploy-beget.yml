@@ -31,7 +31,7 @@ jobs:
       - name: Prepare site
         run: |
           mkdir -p _site
-          cp index.html styles.css ascii-bg.js _site/
+          cp index.html styles.css ascii-bg.js gate.js _site/
           if [ -f CNAME ]; then cp CNAME _site/; fi
 
       - name: Upload to Beget (FTPS)
