@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ASCII</title>
+  <title>Оскар Шайхутдинов — Frontend</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600&family=Onest:wght@400;500;600;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="gate-active">
@@ -32,10 +32,154 @@
     })();
   </script>
   <main>
-    <div class="panel">
-      <h1>Фон из <span>ASCII</span></h1>
-      <p class="meta">canvas - autodeploy</p>
-    </div>
+    <article class="panel cv" itemscope itemtype="https://schema.org/Person">
+      <meta itemprop="name" content="Оскар Шайхутдинов" />
+      <header class="cv-header">
+        <!-- <p class="cv-updated">Резюме обновлено 20 апреля 2026</p> -->
+        <h1>Оскар Шайхутдинов</h1>
+        <p class="cv-lead">Frontend-разработчик · сейчас Lead в Сбере · 12+ лет опыта</p>
+        <p class="cv-meta-line">Москва · готов к переезду (Казань, Санкт-Петербург, Сочи) · командировки</p>
+        <ul class="cv-contacts">
+          <li><a href="tel:+79377778776">+7 (937) 777-87-76</a></li>
+          <li><a href="mailto:oskar-fi@yandex.ru">oskar-fi@yandex.ru</a></li>
+          <li><a href="https://t.me/OskarSR" rel="noopener noreferrer">Telegram: @OskarSR</a></li>
+          <li><a href="https://www.behance.net/oskarstudeeac" rel="noopener noreferrer">Behance</a></li>
+        </ul>
+      </header>
+
+      <section class="cv-section" aria-labelledby="cv-about">
+        <h2 id="cv-about">О себе</h2>
+        <div class="cv-prose">
+          <p>Занимаюсь разработкой личного кабинета электронной подписи в Сбере, иногда пишу статьи для образовательного проекта <a href="https://doka.guide/" rel="noopener noreferrer">doka.guide</a>.</p>
+          <p>Ранее участвовал в создании интерфейса для объекта «Башня Эволюции» в Москва-Сити, работал в технической поддержке дата-центра и занимался администрированием ИТ-инфраструктуры FIFA World Cup 2018.</p>
+          <p>Опыт работы с интерфейсами подтолкнул к желанию не только проектировать дизайн-системы, но и воплощать их в коде. Разрабатываю функциональные компоненты на React. Умею работать как с фронтендом, так и с бэкендом — от проектирования архитектуры до деплоя. Помогаю с решением задач бизнеса и предлагаю нестандартные, эффективные идеи.</p>
+          <p class="cv-stack"><strong>Стек:</strong> JavaScript / TypeScript, React, Redux, Node.js, Express, PostgreSQL.</p>
+          <p class="cv-closing">Ищу команду, где уважают экспертизу людей и где профессиональный рост поддерживают делом.</p>
+        </div>
+      </section>
+
+      <section class="cv-section" aria-labelledby="cv-exp">
+        <h2 id="cv-exp">Опыт работы</h2>
+
+        <article class="cv-job">
+          <div class="cv-job-head">
+            <h3>Сбер <span class="cv-job-note">Финансы · банк</span></h3>
+            <p class="cv-job-role">Lead Frontend-разработчик</p>
+            <p class="cv-job-period">Октябрь 2022 — настоящее время <span class="cv-job-duration">(3 года 7 мес.)</span></p>
+            <p class="cv-job-stack">JS/TS, React, RTK, Cypress, Jest</p>
+          </div>
+          <ul class="cv-list">
+            <li>Разработка веб-интерфейсов</li>
+            <li>Управление командой frontend-разработчиков</li>
+            <li>Выбор технических и архитектурных решений</li>
+            <li>Взаимодействие с другими командами</li>
+            <li>Рефакторинг и оптимизация кода</li>
+            <li>Unit и автотесты, исправление багов</li>
+          </ul>
+        </article>
+
+        <article class="cv-job">
+          <div class="cv-job-head">
+            <h3>IT 7</h3>
+            <p class="cv-job-role">Frontend-разработчик</p>
+            <p class="cv-job-period">Май 2021 — сентябрь 2022 <span class="cv-job-duration">(1 год 5 мес.)</span></p>
+            <p class="cv-job-note">Команда 7 человек, заказная разработка</p>
+          </div>
+          <div class="cv-subproject">
+            <h4>Placer</h4>
+            <p class="cv-job-stack">React, Redux, Express, Postgres — подбор мест и партнёров для посещения.</p>
+            <ul class="cv-list">
+              <li>Клиентская часть, вёрстка и компоненты по дизайн-макету</li>
+              <li>Спроектировал макет всех страниц приложения</li>
+              <li>Логика комментариев на Redux Toolkit и Postgres</li>
+            </ul>
+          </div>
+          <div class="cv-subproject">
+            <h4>Vagrigator</h4>
+            <p class="cv-job-stack">React, Express, Postgres — сбор финансовых активов в одном месте.</p>
+            <ul class="cv-list">
+              <li>Вывод данных из Tinkoff API</li>
+              <li>Страница личного кабинета, функциональные компоненты</li>
+              <li>Chart.js для графиков на главной</li>
+            </ul>
+          </div>
+        </article>
+
+        <article class="cv-job">
+          <div class="cv-job-head">
+            <h3>Imatic technology</h3>
+            <p class="cv-job-role">UX/UI-дизайнер</p>
+            <p class="cv-job-period">Ноябрь 2018 — май 2021 <span class="cv-job-duration">(2 года 7 мес.)</span></p>
+          </div>
+          <ul class="cv-list">
+            <li>Проектирование интерфейсов для CRM и СКУД</li>
+            <li>Веб-страницы и email-рассылки, вёрстка и адаптация</li>
+            <li>Стайлгайд, анимированные элементы, печатная продукция</li>
+          </ul>
+        </article>
+
+        <article class="cv-job">
+          <div class="cv-job-head">
+            <h3>FIFA World Cup 2018 / IT Park Datacenter <span class="cv-job-note">Казань</span></h3>
+            <p class="cv-job-role">Инженер технической поддержки</p>
+            <p class="cv-job-period">Январь 2014 — июль 2018 <span class="cv-job-duration">(4 года 7 мес.)</span></p>
+          </div>
+          <ul class="cv-list">
+            <li>Диагностика и решение проблем ПО и оборудования, сеть и учётные записи</li>
+            <li>Коммуникация с клиентами (телефон, почта, чат), эскалация во внутренние команды</li>
+            <li>Приоритизация и ведение нескольких обращений, ведение учёта инцидентов</li>
+          </ul>
+        </article>
+      </section>
+
+      <section class="cv-section" aria-labelledby="cv-edu">
+        <h2 id="cv-edu">Образование</h2>
+        <article class="cv-edu">
+          <h3>Магистр, информационные технологии</h3>
+          <p>КНИТУ-КАИ им. А. Н. Туполева, Казань · 2015</p>
+          <p class="cv-edu-detail">Информатика и вычислительная техника</p>
+        </article>
+      </section>
+
+      <section class="cv-section" aria-labelledby="cv-courses">
+        <h2 id="cv-courses">Курсы и повышение квалификации</h2>
+        <ul class="cv-courses">
+          <li><span class="cv-year">2025</span> Сбер Университет — ИИ-агенты</li>
+          <li><span class="cv-year">2020</span> Contented — дизайнер интерактивных медиа</li>
+          <li><span class="cv-year">2020</span> OTUS — React.js Developer</li>
+          <li><span class="cv-year">2019</span> Controforma — эстафета креативного огня</li>
+          <li><span class="cv-year">2018</span> Contented — дизайнер интерфейсов</li>
+          <li><span class="cv-year">2017</span> HTML Academy — базовый HTML и CSS</li>
+        </ul>
+      </section>
+
+      <section class="cv-section" aria-labelledby="cv-skills">
+        <h2 id="cv-skills">Навыки</h2>
+        <p class="cv-skills-intro">JavaScript, React, HTML, CSS, PostgreSQL, Node.js, Git, Sequelize, Express, Ajax, SQL, Bootstrap, UX, UI, Figma, Less, Jenkins, REST API, Jest, Cypress, SPA и др.</p>
+        <div class="cv-tags" aria-label="Ключевые технологии">
+          <span>JavaScript</span><span>TypeScript</span><span>React</span><span>Redux</span><span>RTK</span>
+          <span>Node.js</span><span>Express</span><span>PostgreSQL</span><span>SQL</span><span>REST API</span>
+          <span>HTML</span><span>CSS</span><span>Less</span><span>Bootstrap</span><span>Git</span>
+          <span>Jest</span><span>Cypress</span><span>Jenkins</span><span>UX</span><span>UI</span><span>Figma</span>
+        </div>
+      </section>
+
+      <section class="cv-section cv-section--compact" aria-labelledby="cv-lang">
+        <h2 id="cv-lang">Языки</h2>
+        <ul class="cv-inline-list">
+          <li>Русский — родной</li>
+          <li>Английский — B2</li>
+          <li>Немецкий — B1</li>
+        </ul>
+      </section>
+
+      <section class="cv-section cv-section--compact" aria-labelledby="cv-drive">
+        <h2 id="cv-drive">Вождение</h2>
+        <p class="cv-drive">Категория B, есть личный автомобиль.</p>
+      </section>
+
+      <p class="meta cv-footer-meta">background · autodeploy · resume</p>
+    </article>
   </main>
   <script src="gate.js" defer></script>
   <script src="ascii-bg.js" defer></script>
