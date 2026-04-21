@@ -33,6 +33,14 @@ jobs:
           mkdir -p _site
           cp index.html styles.css ascii-bg.js gate.js _site/
           if [ -f CNAME ]; then cp CNAME _site/; fi
+          # Все каталоги в корне репозитория → на сайт (кроме служебных)
+          shopt -s nullglob
+          for d in */; do
+            d="${d%/}"
+            case "$d" in _site|node_modules|vendor) continue ;; esac
+            cp -r "$d" _site/
+          done
+          shopt -u nullglob
 
       - name: Upload to Beget (FTPS)
         uses: SamKirkland/FTP-Deploy-Action@v4.3.6

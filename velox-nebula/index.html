@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Velox Nebula</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background: #020510;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background:
+        radial-gradient(ellipse 80% 60% at 20% 40%, rgba(30, 10, 80, 0.55) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 50% at 80% 70%, rgba(0, 60, 120, 0.45) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 50% 10%, rgba(0, 180, 200, 0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .grid {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background-image:
+        linear-gradient(rgba(0, 200, 255, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 200, 255, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse 90% 80% at 50% 50%, black 30%, transparent 100%);
+      pointer-events: none;
+    }
+
+    .scanline {
+      position: fixed;
+      inset: 0;
+      z-index: 2;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0px,
+        transparent 3px,
+        rgba(0, 0, 0, 0.08) 3px,
+        rgba(0, 0, 0, 0.08) 4px
+      );
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 10;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      gap: 16px;
+      color: #fff;
+      text-align: center;
+    }
+
+    .badge {
+      font-size: 11px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(0, 220, 255, 0.7);
+      border: 1px solid rgba(0, 220, 255, 0.25);
+      padding: 6px 16px;
+      border-radius: 100px;
+      backdrop-filter: blur(4px);
+      background: rgba(0, 220, 255, 0.06);
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 7vw, 6rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      background: linear-gradient(135deg, #ffffff 0%, #a8d8ff 40%, #00e5ff 70%, #7b5fff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 40px rgba(0, 200, 255, 0.35));
+    }
+
+    p {
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      color: rgba(180, 210, 255, 0.6);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .btn {
+      margin-top: 8px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 14px 32px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      border: none;
+      background: linear-gradient(135deg, #0066ff, #7b2fff);
+      color: #fff;
+      box-shadow: 0 0 30px rgba(0, 100, 255, 0.4), 0 4px 20px rgba(0,0,0,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .btn:hover {
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 0 50px rgba(0, 120, 255, 0.6), 0 6px 30px rgba(0,0,0,0.5);
+    }
+
+    .orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(80px);
+      pointer-events: none;
+      z-index: 0;
+    }
+    .orb-1 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(80, 20, 200, 0.5), transparent 70%);
+      top: -100px; left: -100px;
+      animation: drift1 18s ease-in-out infinite alternate;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(0, 150, 220, 0.45), transparent 70%);
+      bottom: -80px; right: -80px;
+      animation: drift2 14s ease-in-out infinite alternate;
+    }
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(0, 220, 180, 0.2), transparent 70%);
+      top: 40%; left: 55%;
+      animation: drift3 22s ease-in-out infinite alternate;
+    }
+
+    @keyframes drift1 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(80px, 60px) scale(1.15); }
+    }
+    @keyframes drift2 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(-60px, -80px) scale(1.2); }
+    }
+    @keyframes drift3 {
+      from { transform: translate(0, 0) scale(1); }
+      to   { transform: translate(-40px, 50px) scale(0.9); }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+  <canvas id="c"></canvas>
+  <div class="overlay"></div>
+  <div class="grid"></div>
+  <div class="scanline"></div>
+
+  <div class="content">
+    <div class="badge">AI · Generative · Adaptive</div>
+    <h1>Neural<br>Horizon</h1>
+    <p>Next-generation intelligence woven into every pixel. Explore the edge where data becomes vision.</p>
+    <button class="btn">&#9658; Get started</button>
+  </div>
+
+  <script>
+    const canvas = document.getElementById('c');
+    const ctx = canvas.getContext('2d');
+
+    let W, H, nodes, mouse = { x: -9999, y: -9999 };
+
+    const NODE_COUNT = 90;
+    const MAX_DIST = 160;
+    const SPEED = 0.35;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+
+    class Node {
+      constructor() { this.reset(true); }
+      reset(init) {
+        this.x  = Math.random() * W;
+        this.y  = init ? Math.random() * H : (Math.random() < 0.5 ? -5 : H + 5);
+        this.vx = (Math.random() - 0.5) * SPEED;
+        this.vy = (Math.random() - 0.5) * SPEED;
+        this.r  = Math.random() * 1.8 + 0.6;
+        this.pulse = Math.random() * Math.PI * 2;
+        this.pulseSpeed = 0.02 + Math.random() * 0.02;
+        const hues = [195, 210, 260, 280, 180];
+        this.hue = hues[Math.floor(Math.random() * hues.length)];
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.pulse += this.pulseSpeed;
+
+        const mdx = this.x - mouse.x;
+        const mdy = this.y - mouse.y;
+        const md  = Math.sqrt(mdx * mdx + mdy * mdy);
+        if (md < 120) {
+          const force = (120 - md) / 120 * 0.3;
+          this.vx += (mdx / md) * force;
+          this.vy += (mdy / md) * force;
+        }
+
+        const maxV = SPEED * 3;
+        const v = Math.sqrt(this.vx*this.vx + this.vy*this.vy);
+        if (v > maxV) { this.vx = this.vx/v*maxV; this.vy = this.vy/v*maxV; }
+
+        this.vx *= 0.998;
+        this.vy *= 0.998;
+
+        if (this.x < -20 || this.x > W+20 || this.y < -20 || this.y > H+20) this.reset(false);
+      }
+      draw() {
+        const a = 0.6 + 0.4 * Math.sin(this.pulse);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r * a, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, 100%, 75%, ${a * 0.9})`;
+        ctx.fill();
+
+        const glow = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.r * 6);
+        glow.addColorStop(0, `hsla(${this.hue}, 100%, 70%, ${a * 0.25})`);
+        glow.addColorStop(1, 'transparent');
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r * 6, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+      }
+    }
+
+    function init() {
+      resize();
+      nodes = Array.from({ length: NODE_COUNT }, () => new Node());
+    }
+
+    function drawEdges() {
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const a = nodes[i], b = nodes[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if (dist > MAX_DIST) continue;
+          const alpha = (1 - dist / MAX_DIST) * 0.45;
+          const midH = (a.hue + b.hue) / 2;
+          const grad = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+          grad.addColorStop(0, `hsla(${a.hue}, 100%, 65%, ${alpha})`);
+          grad.addColorStop(1, `hsla(${b.hue}, 100%, 65%, ${alpha})`);
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = grad;
+          ctx.lineWidth = alpha * 1.2;
+          ctx.stroke();
+        }
+      }
+    }
+
+    let t = 0;
+    function loop() {
+      ctx.clearRect(0, 0, W, H);
+
+      t += 0.003;
+      // subtle animated dark background gradient
+      const bg = ctx.createRadialGradient(W*0.5 + Math.sin(t)*80, H*0.5 + Math.cos(t)*60, 0,
+                                           W*0.5, H*0.5, Math.max(W, H) * 0.9);
+      bg.addColorStop(0, 'rgba(8, 6, 30, 0)');
+      bg.addColorStop(1, 'rgba(2, 5, 16, 0)');
+      ctx.fillStyle = bg;
+      ctx.fillRect(0, 0, W, H);
+
+      drawEdges();
+      nodes.forEach(n => { n.update(); n.draw(); });
+
+      requestAnimationFrame(loop);
+    }
+
+    window.addEventListener('resize', () => { resize(); nodes.forEach(n => n.reset(true)); });
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseleave', () => { mouse.x = -9999; mouse.y = -9999; });
+
+    init();
+    loop();
+  </script>
+</body>
+</html>
